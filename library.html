@@ -15,10 +15,7 @@
 
     <title>Monograph - Academic PDF Library</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -236,7 +233,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
-              <img src="assets/images/black-book-logo.png" alt="Monograph" style="height: 40px; width: auto;">
+              <img src="assets/images/white-book-logo.png" alt="Monograph" style="height: 40px; width: auto;" class="logo-img">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -597,8 +594,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/custom.js"></script>
 
@@ -1012,7 +1007,12 @@
 
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', function() {
-      renderSubjects('all');
+      // Check if a year parameter is passed in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const yearParam = urlParams.get('year');
+      const initialYear = yearParam || 'all';
+      
+      renderSubjects(initialYear);
 
       // Add sorting button event listeners
       document.querySelectorAll('.sort-btn').forEach(btn => {
@@ -1034,6 +1034,14 @@
           }, 150);
         });
       });
+      
+      // If a year was passed via URL, click the corresponding button to highlight it
+      if (yearParam) {
+        const btn = document.querySelector(`button.sort-btn[data-year="${yearParam}"]`);
+        if (btn) {
+          btn.click();
+        }
+      }
     });
 
     function openPDF(pdfFile, subject, year) {
@@ -1050,11 +1058,15 @@
     // Navigation Color Change on Scroll
     document.addEventListener('DOMContentLoaded', function() {
       const navbar = document.querySelector('.header-area');
+      const logoImg = document.querySelector('.logo-img');
       const navLinks = document.querySelectorAll('.header-area .main-nav .nav li a');
       
-      // Add inline styles to ensure Contact link changes color
+      // Add inline styles to ensure Contact link changes color and logo fades
       const style = document.createElement('style');
       style.textContent = `
+        .logo-img {
+          transition: opacity 0.4s ease !important;
+        }
         .header-area.scrolled-nav .main-nav .nav li a { color: #2a2a2a !important; }
         .header-area.scrolled-nav .main-nav .nav li a.active { color: #8d99af !important; }
         .header-area.scrolled-nav .main-nav .nav li:last-child a { color: #2a2a2a !important; }
@@ -1065,13 +1077,29 @@
       window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         
-        // If scrolled down more than 100px, change navigation colors
+        // If scrolled down more than 100px, change navigation colors and logo
         if (scrollPosition > 100) {
           if (!navbar.classList.contains('scrolled-nav')) {
             navbar.classList.add('scrolled-nav');
           }
+          // Fade logo and swap to black
+          if (logoImg && logoImg.src.includes('white-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/black-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         } else {
           navbar.classList.remove('scrolled-nav');
+          // Fade logo back to white
+          if (logoImg && logoImg.src.includes('black-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/white-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         }
       });
     });

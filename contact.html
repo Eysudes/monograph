@@ -16,11 +16,7 @@
 
     <title>Monograph - Academic PDF Library</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -82,7 +78,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
-              <img src="assets/images/black-book-logo.png" alt="Monograph" style="height: 40px; width: auto;">
+              <img src="assets/images/white-book-logo.png" alt="Monograph" style="height: 40px; width: auto;" class="logo-img">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -128,28 +124,28 @@
         <div class="col-lg-6">
           <div class="creator-profile">
             <div class="creator-image">
-              <img src="assets/images/creator1-placeholder.jpg" alt="Co-Creator 1" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid #f8f9fa;">
+              <img src="assets/images/ace.jpg" alt="Amarius Ramirez" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid #f8f9fa;">
             </div>
-            <h3>[Co-Creator 1 Name]</h3>
-            <h4>[Position/Role]</h4>
-            <p>[Brief bio about Co-Creator 1. Add actual information here when available.]</p>
+            <h3>Amarius Ramirez</h3>
+            <h4>Full Stack Developer</h4>
+            <p>Likes to work behind the curtains but gives fulfilling results. Dedicated to creating seamless user experiences and robust technical solutions that power Monograph's platform.</p>
             <div class="contact-info">
-              <p><strong>Email:</strong> [creator1@monograph.edu]</p>
-              <p><strong>Specialization:</strong> [Academic field/area of expertise]</p>
+              <p><strong>Email:</strong> amarius.ramirez@gmail.com</p>
+              <p><strong>Specialization:</strong> Technical Support</p>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="creator-profile">
             <div class="creator-image">
-              <img src="assets/images/creator2-placeholder.jpg" alt="Co-Creator 2" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid #f8f9fa;">
+              <img src="assets/images/joey.jpg" alt="Joey Patrick Carpio" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid #f8f9fa;">
             </div>
-            <h3>[Co-Creator 2 Name]</h3>
-            <h4>[Position/Role]</h4>
-            <p>[Brief bio about Co-Creator 2. Add actual information here when available.]</p>
+            <h3>Joey Patrick Carpio</h3>
+            <h4>Full Stack Developer</h4>
+            <p>Diligent advocate who does tasks on time. Passionate about creating intuitive interfaces and maintaining high standards of code quality.</p>
             <div class="contact-info">
-              <p><strong>Email:</strong> [creator2@monograph.edu]</p>
-              <p><strong>Specialization:</strong> [Academic field/area of expertise]</p>
+              <p><strong>Email:</strong> joey.carpio@gmail.com</p>
+              <p><strong>Specialization:</strong> Web Design</p>
             </div>
           </div>
         </div>
@@ -213,8 +209,6 @@
 
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/custom.js"></script>
 
@@ -222,11 +216,15 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const navbar = document.querySelector('.header-area');
+      const logoImg = document.querySelector('.logo-img');
       const navLinks = document.querySelectorAll('.header-area .main-nav .nav li a');
       
-      // Add inline styles to ensure Contact link changes color
+      // Add inline styles to ensure Contact link changes color and logo fades
       const style = document.createElement('style');
       style.textContent = `
+        .logo-img {
+          transition: opacity 0.4s ease !important;
+        }
         .header-area.scrolled-nav .main-nav .nav li a { color: #2a2a2a !important; }
         .header-area.scrolled-nav .main-nav .nav li a.active { color: #8d99af !important; }
         .header-area.scrolled-nav .main-nav .nav li:last-child a { color: #2a2a2a !important; }
@@ -237,13 +235,29 @@
       window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         
-        // If scrolled down more than 100px, change navigation colors
+        // If scrolled down more than 100px, change navigation colors and logo
         if (scrollPosition > 100) {
           if (!navbar.classList.contains('scrolled-nav')) {
             navbar.classList.add('scrolled-nav');
           }
+          // Fade logo and swap to black
+          if (logoImg && logoImg.src.includes('white-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/black-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         } else {
           navbar.classList.remove('scrolled-nav');
+          // Fade logo back to white
+          if (logoImg && logoImg.src.includes('black-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/white-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         }
       });
     });

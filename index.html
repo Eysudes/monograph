@@ -16,10 +16,7 @@
 
     <title>Monograph - Academic Digital Library</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -48,7 +45,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
-              <img src="assets/images/black-book-logo.png" alt="Monograph" style="height: 40px; width: auto;">
+              <img src="assets/images/white-book-logo.png" alt="Monograph" style="height: 40px; width: auto;" class="logo-img">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -81,11 +78,10 @@
 
         <div class="col-lg-10 offset-lg-1">
           <ul class="categories">
-            <li><a href="library.html"><span class="icon"><img src="assets/images/calculus.png" alt="1st Year"></span> 1st Year</a></li>
-            <li><a href="library.html"><span class="icon"><img src="assets/images/calculating.png" alt="2nd Year"></span> 2nd Year</a></li>
-            <li><a href="library.html"><span class="icon"><img src="assets/images/geometry.png" alt="3rd Year"></span> 3rd Year</a></li>
-            <li><a href="library.html"><span class="icon"><img src="assets/images/logarithm.png" alt="4th Year"></span> 4th Year</a></li>
-            <li><a href="library.html"><span class="icon"><img src="assets/images/trigonometry.png" alt="Library"></span> Browse Library</a></li>
+            <li><a href="library.html?year=1st"><span class="icon"><img src="assets/images/calculus.png" alt="1st Year"></span> 1st Year</a></li>
+            <li><a href="library.html?year=2nd"><span class="icon"><img src="assets/images/calculating.png" alt="2nd Year"></span> 2nd Year</a></li>
+            <li><a href="library.html?year=3rd"><span class="icon"><img src="assets/images/geometry.png" alt="3rd Year"></span> 3rd Year</a></li>
+            <li><a href="library.html?year=4th"><span class="icon"><img src="assets/images/logarithm.png" alt="4th Year"></span> 4th Year</a></li>
           </ul>
         </div>
       </div>
@@ -143,8 +139,7 @@
                             <div class="col-lg-5 align-self-center">
                               <div class="left-text">
                                 <h4>1st Year: Foundation in Mathematics</h4>
-                                <p>Master foundational mathematical concepts including Mathematics in the Modern World, Calculus I & II, Fundamental Concepts of Mathematics, and Linear Algebra. Build strong problem-solving abilities and develop a rigorous understanding of core mathematical principles.</p>
-                                <div class="main-white-button"><a href="library.html"><i class="fa fa-eye"></i> View 1st Year Resources</a></div>
+                                <div class="main-white-button"><a href="library.html?year=1st"><i class="fa fa-eye"></i> View 1st Year Resources</a></div>
                               </div>
                             </div>
                             <div class="col-lg-7 align-self-center">
@@ -163,8 +158,7 @@
                             <div class="col-lg-5 align-self-center">
                               <div class="left-text">
                                 <h4>2nd Year: Advanced Mathematics & Physics</h4>
-                                <p>Expand your knowledge with Probability, Calculus III, General Physics I & II, Fundamentals of Computing I, Advanced Calculus I, and Differential Equations. Deepen mathematical understanding while exploring physics applications and introduction to computational thinking.</p>
-                                <div class="main-white-button"><a href="library.html"><i class="fa fa-eye"></i> View 2nd Year Resources</a></div>
+                                <div class="main-white-button"><a href="library.html?year=2nd"><i class="fa fa-eye"></i> View 2nd Year Resources</a></div>
                               </div>
                             </div>
                             <div class="col-lg-7 align-self-center">
@@ -183,8 +177,7 @@
                             <div class="col-lg-5 align-self-center">
                               <div class="left-text">
                                 <h4>3rd Year: Specialization & Applications</h4>
-                                <p>Explore specialized topics including Abstract Algebra II, Database Management, Advanced Calculus II, Java Programming, Modern Geometry, Elementary Number Theory, Web Development, and Python Programming. Combine pure mathematics with practical computer science applications.</p>
-                                <div class="main-white-button"><a href="library.html"><i class="fa fa-eye"></i> View 3rd Year Resources</a></div>
+                                <div class="main-white-button"><a href="library.html?year=3rd"><i class="fa fa-eye"></i> View 3rd Year Resources</a></div>
                               </div>
                             </div>
                             <div class="col-lg-7 align-self-center">
@@ -203,8 +196,7 @@
                             <div class="col-lg-5 align-self-center">
                               <div class="left-text">
                                 <h4>4th Year: Advanced Theory & Analysis</h4>
-                                <p>Master advanced mathematical theory with Statistical Theory, Complex Analysis, Real Analysis, Numerical Analysis, and Operations Research I. Prepare for graduate studies or professional careers through rigorous analysis and mathematical modeling coursework.</p>
-                                <div class="main-white-button"><a href="library.html"><i class="fa fa-eye"></i> View 4th Year Resources</a></div>
+                                <div class="main-white-button"><a href="library.html?year=4th"><i class="fa fa-eye"></i> View 4th Year Resources</a></div>
                               </div>
                             </div>
                             <div class="col-lg-7 align-self-center">
@@ -282,8 +274,6 @@
 
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/custom.js"></script>
 
@@ -291,11 +281,15 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const navbar = document.querySelector('.header-area');
+      const logoImg = document.querySelector('.logo-img');
       const navLinks = document.querySelectorAll('.header-area .main-nav .nav li a');
       
-      // Add inline styles to ensure Contact link changes color
+      // Add inline styles to ensure Contact link changes color and logo fades
       const style = document.createElement('style');
       style.textContent = `
+        .logo-img {
+          transition: opacity 0.4s ease !important;
+        }
         .header-area.scrolled-nav .main-nav .nav li a { color: #2a2a2a !important; }
         .header-area.scrolled-nav .main-nav .nav li a.active { color: #8d99af !important; }
         .header-area.scrolled-nav .main-nav .nav li:last-child a { color: #2a2a2a !important; }
@@ -305,13 +299,29 @@
       window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         
-        // If scrolled down more than 100px, change navigation colors
+        // If scrolled down more than 100px, change navigation colors and logo
         if (scrollPosition > 100) {
           if (!navbar.classList.contains('scrolled-nav')) {
             navbar.classList.add('scrolled-nav');
           }
+          // Fade logo and swap to black
+          if (logoImg && logoImg.src.includes('white-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/black-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         } else {
           navbar.classList.remove('scrolled-nav');
+          // Fade logo back to white
+          if (logoImg && logoImg.src.includes('black-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/white-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         }
       });
     });

@@ -15,10 +15,7 @@
 
     <title>Monograph - Academic PDF Library</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/animated.css">
@@ -47,7 +44,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="index.html" class="logo">
-              <img src="assets/images/black-book-logo.png" alt="Monograph" style="height: 40px; width: auto;">
+              <img src="assets/images/white-book-logo.png" alt="Monograph" style="height: 40px; width: auto;" class="logo-img">
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
@@ -92,11 +89,11 @@
         </div>
         <div class="col-lg-12 about-section">
           <div class="right-content">
-            <h4>Free Access to Academic Knowledge</h4>
-            <p>Monograph is dedicated to providing completely free access to high-quality academic books and resources for all students and educators. Our comprehensive digital library contains textbooks, reference materials, lecture notes, and research papers across multiple academic disciplines including mathematics, physics, computer science, database management, web development, and specialized engineering fields.</p>
-            <p>We firmly believe that knowledge should be accessible to everyone, regardless of their financial circumstances or geographical location. Quality education should never be limited by the ability to purchase expensive textbooks. Our mission is to democratize access to academic resources and support students in achieving their educational goals without financial barriers.</p>
-            <p>Our curated collection spans the entire four-year BS Mathematics curriculum, providing comprehensive resources for foundational courses like Calculus, Linear Algebra, and Fundamental Concepts, through to advanced topics including Complex Analysis, Real Analysis, Abstract Algebra, and more. Each resource is carefully selected from reputable academic publishers and institutions, ensuring students and educators have access to authoritative, peer-reviewed materials that meet academic standards.</p>
-            <p>Whether you're beginning your mathematics journey in your first year or pursuing advanced specialized topics in your fourth year, Monograph provides the essential academic materials needed to succeed. We continuously expand our collection to include newly published resources and emerging fields in mathematics, engineering, and computing sciences, ensuring our library remains current and comprehensive.</p>
+            <h4>Supporting BS Mathematics Students</h4>
+            <p>Monograph is specifically designed for Bachelor of Science in Mathematics students, particularly incoming first-year students, to provide easier access to essential learning materials and textbooks. We understand the challenges faced by math students in acquiring expensive textbooks and quality reference materials, and our mission is to eliminate these barriers.</p>
+            <p>Our comprehensive digital library is carefully curated to align with the BS Mathematics curriculum, providing essential resources for every stage of your academic journey. From foundational concepts in your first year through advanced specialized topics in your fourth year, Monograph offers a complete collection of high-quality academic materials to support your success.</p>
+            <p>Whether you're tackling Calculus I, exploring Abstract Algebra, or diving into advanced computational topics, Monograph provides free access to the textbooks and resources you need. We believe that access to quality educational materials should not be limited by financial constraints, allowing all students to focus on their studies rather than worrying about textbook costs.</p>
+            <p>As a BS Math student, you'll find organized collections by academic year and subject, making it easy to find exactly what you need for your courses. Our library continues to expand with new resources to ensure you have the most current and comprehensive materials available to support your mathematical education and academic growth.</p>
             <div class="main-white-button">
               <a href="library.html"><i class="fa fa-eye"></i> Explore Our Library</a>
             </div>
@@ -188,8 +185,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/animation.js"></script>
   <script src="assets/js/custom.js"></script>
 
@@ -197,11 +192,15 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const navbar = document.querySelector('.header-area');
+      const logoImg = document.querySelector('.logo-img');
       const navLinks = document.querySelectorAll('.header-area .main-nav .nav li a');
       
-      // Add inline styles to ensure Contact link changes color
+      // Add inline styles to ensure Contact link changes color and logo fades
       const style = document.createElement('style');
       style.textContent = `
+        .logo-img {
+          transition: opacity 0.4s ease !important;
+        }
         .header-area.scrolled-nav .main-nav .nav li a { color: #2a2a2a !important; }
         .header-area.scrolled-nav .main-nav .nav li a.active { color: #8d99af !important; }
         .header-area.scrolled-nav .main-nav .nav li:last-child a { color: #2a2a2a !important; }
@@ -212,13 +211,29 @@
       window.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         
-        // If scrolled down more than 100px, change navigation colors
+        // If scrolled down more than 100px, change navigation colors and logo
         if (scrollPosition > 100) {
           if (!navbar.classList.contains('scrolled-nav')) {
             navbar.classList.add('scrolled-nav');
           }
+          // Fade logo and swap to black
+          if (logoImg && logoImg.src.includes('white-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/black-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         } else {
           navbar.classList.remove('scrolled-nav');
+          // Fade logo back to white
+          if (logoImg && logoImg.src.includes('black-book-logo')) {
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.src = 'assets/images/white-book-logo.png';
+              logoImg.style.opacity = '1';
+            }, 200);
+          }
         }
       });
       
