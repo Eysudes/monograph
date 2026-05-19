@@ -18,30 +18,39 @@ window.addEventListener('scroll', function() {
 
 // Accordion menu toggle
 document.addEventListener('click', function(event) {
-  const menuItem = event.target.closest('.naccs .menu div');
-  if (!menuItem) return;
-
-  const menuContainer = menuItem.closest('.naccs');
-  if (!menuContainer) return;
-
-  const numberIndex = Array.from(menuContainer.querySelectorAll('.menu div')).indexOf(menuItem);
-
-  if (!menuItem.classList.contains('active')) {
-    // Remove active from all items
-    menuContainer.querySelectorAll('.menu div').forEach(div => {
-      div.classList.remove('active');
-    });
-    menuContainer.querySelectorAll('ul li').forEach(li => {
-      li.classList.remove('active');
-    });
-
-    // Add active to selected item
-    menuItem.classList.add('active');
-    const listItem = menuContainer.querySelector('ul').querySelector(`li:nth-child(${numberIndex + 1})`);
-    if (listItem) {
-      listItem.classList.add('active');
-      const listItemHeight = listItem.offsetHeight;
-      menuContainer.querySelector('ul').style.height = listItemHeight + 'px';
+  // Find the menu item that was clicked (could be anywhere inside it)
+  const clickedElement = event.target;
+  const naccsContainer = clickedElement.closest('.naccs');
+  
+  if (!naccsContainer) return;
+  
+  // Find the immediate menu div parent
+  let menuDiv = clickedElement.closest('.menu > div');
+  if (!menuDiv) return;
+  
+  // Get the index of this menu item
+  const menuItems = naccsContainer.querySelectorAll('.menu > div');
+  const numberIndex = Array.from(menuItems).indexOf(menuDiv);
+  
+  if (numberIndex === -1) return;
+  
+  // Remove active from all menu items
+  menuItems.forEach(item => item.classList.remove('active'));
+  
+  // Remove active from all list items
+  const listItems = naccsContainer.querySelectorAll('.nacc > li');
+  listItems.forEach(item => item.classList.remove('active'));
+  
+  // Add active to selected items
+  menuDiv.classList.add('active');
+  if (listItems[numberIndex]) {
+    listItems[numberIndex].classList.add('active');
+    
+    // Update height
+    const naccsUl = naccsContainer.querySelector('.nacc');
+    if (naccsUl) {
+      const selectedHeight = listItems[numberIndex].offsetHeight;
+      naccsUl.style.height = selectedHeight + 'px';
     }
   }
 });
@@ -51,16 +60,25 @@ const menuTrigger = document.querySelector('.menu-trigger');
 const nav = document.querySelector('.header-area .nav');
 
 if (menuTrigger && nav) {
-  menuTrigger.addEventListener('click', function() {
+  menuTrigger.addEventListener('click', function(e) {
+    e.stopPropagation();
     menuTrigger.classList.toggle('active');
-    
-    // Smooth slide toggle animation
-    if (nav.classList.contains('active')) {
+    nav.classList.toggle('active');
+  });
+  
+  // Close menu when clicking on a link
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function() {
       nav.classList.remove('active');
-      nav.style.maxHeight = '0';
-    } else {
-      nav.classList.add('active');
-      nav.style.maxHeight = nav.scrollHeight + 'px';
+      menuTrigger.classList.remove('active');
+    });
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!menuTrigger.contains(e.target) && !nav.contains(e.target)) {
+      nav.classList.remove('active');
+      menuTrigger.classList.remove('active');
     }
   });
 }

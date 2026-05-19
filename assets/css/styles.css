@@ -550,21 +550,29 @@ header
   .header-area .main-nav .nav {
     float: none;
     width: 100%;
-    display: none;
-    -webkit-transition: all 0s ease 0s;
-    -moz-transition: all 0s ease 0s;
-    -o-transition: all 0s ease 0s;
-    transition: all 0s ease 0s;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 0.4s ease 0s;
+    -moz-transition: max-height 0.4s ease 0s;
+    -o-transition: max-height 0.4s ease 0s;
+    transition: max-height 0.4s ease 0s;
     margin-left: 0px;
+    margin-top: 0px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 999;
+    flex-direction: column;
+    display: flex;
+    background: #f7f7f7;
   }
-  .background-header .nav {
-    margin-top: 80px;
+  
+  .header-area .main-nav .nav.active {
+    max-height: 320px;
   }
+  
   .header-area .main-nav .nav li:first-child {
-    border-top: 1px solid #eee;
-  }
-  .header-area.header-sticky .nav {
-    margin-top: 100px;
+    border-top: none;
   }
   .header-area .main-nav .nav li {
     width: 100%;
@@ -574,8 +582,8 @@ header
     padding-right: 0px !important;
   }
   .header-area .main-nav .nav li a {
-    height: 50px !important;
-    line-height: 50px !important;
+    height: 70px !important;
+    line-height: 70px !important;
     padding: 0px !important;
     border: none !important;
     background: #f7f7f7 !important;
@@ -758,6 +766,7 @@ Popular Categories
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   transition: 0.5s all cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
